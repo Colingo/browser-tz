@@ -8,7 +8,7 @@
     [![Davis Dependency status][9]][10]
 -->
 
-<!-- [![browser support][11]][12] -->
+[![browser support][11]][12]
 
 Timezone specific manipulation of datetime strings
 
