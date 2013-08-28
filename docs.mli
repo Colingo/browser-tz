@@ -3,6 +3,17 @@ type TimezoneDate := {
     timezone?: String
 }
 
+type IsoDate := {
+    year: Number,
+    month: NUmber,
+    day: Number,
+    hour: Number,
+    minute: Number,
+    second: Number,
+    millisecond: Number,
+    offset: String
+}
+
 type Timezone := {
     IsoString: (date: TimezoneData) => String &
         (date: String, timezone: String) => String,
@@ -24,3 +35,7 @@ type Timezone := {
 }
 
 browser-tz := (timezoneData: Object) => Timezone
+browser-tz/iso-date/parse := (String) => IsoDate | null
+browser-tz/iso-date/format := (IsoDate | Date, offset?: String) => String
+browser-tz/moment/format := (MomentDate) => String
+browser-tz/moment/parse := (TimezoneDate, isoDate?: IsoDate) => MomentDate | null
