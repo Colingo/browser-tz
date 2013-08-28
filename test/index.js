@@ -27,6 +27,6 @@ test("tz has correct methods", function (assert) {
     assert.end()
 })
 
-require("./time.js")
+require("./iso-string.js")
 require("./add.js")
 require("./format.js")

@@ -25,6 +25,7 @@ function IsoString(date, timezone) {
         return "BAD DATE"
     }
 
-    return formatFromMoment(parseToMoment(date, isoDate))
+    var time = parseToMoment(date, isoDate)
+    return formatFromMoment(time)
 }
 

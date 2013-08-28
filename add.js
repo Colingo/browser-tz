@@ -41,7 +41,10 @@ function addNoTimezone(type, date, amount) {
         return "BAD DATE"
     }
 
-    var datetime = new Date(date.iso)
+    // firefox parses dates without an offset of them as UTC
+    // Chrome & opera & IE parses iso dates without an offset on
+    // them as local time
+    var datetime = new Date(isoDate.offset ? date.iso : date.iso + "Z")
 
     if (type === "week") {
         datetime.setDate(datetime.getDate() + 7 * amount)

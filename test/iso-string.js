@@ -87,6 +87,7 @@ test("tz.IsoString ambigious", function (assert) {
         iso: "2013-11-03T02:01:00",
         timezone: "America/Toronto"
     }), "2013-11-03T02:01:00.000-05:00")
+
     // These are ambigious
     assert.equal(tz.IsoString({
         iso: "2013-11-03T01:00:00",
@@ -97,5 +98,43 @@ test("tz.IsoString ambigious", function (assert) {
         timezone: "America/Toronto"
     }), "2013-11-03T01:30:00.000-04:00")
 
+    assert.equal(tz.IsoString({
+        iso: "2013-03-10T03:30:00",
+        timezone: "America/Toronto"
+    }), "2013-03-10T03:30:00.000-04:00")
+    assert.equal(tz.IsoString({
+        iso: "2013-03-10T01:30:00",
+        timezone: "America/Toronto"
+    }), "2013-03-10T01:30:00.000-05:00")
+    assert.equal(tz.IsoString({
+        iso: "2013-03-10T03:01:00",
+        timezone: "America/Toronto"
+    }), "2013-03-10T03:01:00.000-04:00")
+    assert.equal(tz.IsoString({
+        iso: "2013-03-10T03:00:00",
+        timezone: "America/Toronto"
+    }), "2013-03-10T03:00:00.000-04:00")
+    assert.equal(tz.IsoString({
+        iso: "2013-03-10T01:59:00",
+        timezone: "America/Toronto"
+    }), "2013-03-10T01:59:00.000-05:00")
+
+    // these are ambigious
+    assert.equal(tz.IsoString({
+        iso: "2013-03-10T02:00:00",
+        timezone: "America/Toronto"
+    }), "2013-03-10T03:00:00.000-04:00")
+    assert.equal(tz.IsoString({
+        iso: "2013-03-10T02:30:00",
+        timezone: "America/Toronto"
+    }), "2013-03-10T03:30:00.000-04:00")
+
+
     assert.end()
 })
+
+// function printLine(word,end) {
+//     console.log("--------------------------" +
+//         word + (end ? " END--" : " START") +
+//         "-------------------")
+// }
