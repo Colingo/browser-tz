@@ -20,13 +20,6 @@ function BrowserTimezone(timezoneData) {
         addDay: add.bind(null, "day"),
         addWeek: add.bind(null, "week"),
         addMonth: add.bind(null, "month"),
-        addYear: NotImplemented("addYear")
-        // addYear: add.bind(null, "year")
-    }
-}
-
-function NotImplemented(name) {
-    return function () {
-        throw new Error("browser-tz: not implemented " + name)
+        addYear: add.bind(null, "year")
     }
 }

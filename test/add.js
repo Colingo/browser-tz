@@ -262,6 +262,28 @@ test("addMonth", function (assert) {
     assert.end()
 })
 
+test("addYear", function (assert) {
+    assertBadDates(assert, "addYear")
+
+    assert.equal(tz.addYear("2013-11-03T05:00:00.000Z", 1),
+        "2014-11-03T05:00:00.000Z")
+    assert.equal(tz.addYear("2013-11-03T05:00:00.000-05:00", 1),
+        "2014-11-03T05:00:00.000-05:00")
+    assert.equal(tz.addYear("2013-11-03T05:00:00.000", 1),
+        "2014-11-03T05:00:00.000")
+
+    assertDSTBoundary(assert, "year", {
+        iso: "2013-11-03T06:00:00Z",
+        timezone: "America/Toronto"
+    })
+    assertDSTBoundary(assert, "year", {
+        iso: "2013-03-10T07:00:00.000Z",
+        timezone: "America/Toronto"
+    })
+
+    assert.end()
+})
+
 function assertBadDates(assert, operation) {
     assert.equal(tz[operation]("JUNK", 1), "BAD DATE")
     assert.equal(tz[operation]({
@@ -278,27 +300,9 @@ function assertDSTBoundary(assert, type, time) {
     var iso = time.iso
     var timezone = time.timezone
 
-    var operation, timeChange
-
-    if (type === "milliSecond") {
-        operation = timeChange = { fn: "addMillisecond", amount: 100 }
-    } else if (type === "second") {
-        operation = { fn: "addSecond", amount: 1 }
-        timeChange = { fn: "addMillisecond", amount: 1000 }
-    } else if (type === "minute") {
-        operation = { fn: "addMinute", amount: 1 }
-        timeChange = { fn: "addSecond", amount: 60 }
-    } else if (type === "hour") {
-        operation =  { fn: "addHour", amount: 1 }
-        timeChange = { fn: "addMinute", amount: 60 }
-    } else if (type === "day") {
-        operation = timeChange = { fn: "addDay", amount: 2 }
-    } else if (type === "week") {
-        operation = { fn: "addWeek", amount: 2 }
-        timeChange = { fn: "addDay", amount: 14 }
-    } else if (type === "month") {
-        operation = timeChange = { fn: "addMonth", amount: 2 }
-    }
+    var options = getDSTBoundaryOptions(type)
+    var operation = options.operation
+    var timeChange = options.timeChange
 
     var gmtTimes = {
         "-1.5": tz[timeChange.fn](iso, timeChange.amount * -1.5),
@@ -311,7 +315,9 @@ function assertDSTBoundary(assert, type, time) {
     }
 
     var expectedTimes
-    if (type === "week" || type === "day" || type === "month") {
+    if (type === "week" || type === "day" ||
+        type === "month" || type === "year"
+    ) {
         var beforeTime = {
             iso: tz.IsoString({
                 iso: gmtTimes["-0.5"],
@@ -387,5 +393,33 @@ function assertDSTBoundary(assert, type, time) {
             }), expectedTimes[end])
 
         assert.equal(time, expectedTimes[end], message)
+    }
+
+    function getDSTBoundaryOptions(type) {
+        var operation, timeChange
+
+        if (type === "milliSecond") {
+            operation = timeChange = { fn: "addMillisecond", amount: 100 }
+        } else if (type === "second") {
+            operation = { fn: "addSecond", amount: 1 }
+            timeChange = { fn: "addMillisecond", amount: 1000 }
+        } else if (type === "minute") {
+            operation = { fn: "addMinute", amount: 1 }
+            timeChange = { fn: "addSecond", amount: 60 }
+        } else if (type === "hour") {
+            operation =  { fn: "addHour", amount: 1 }
+            timeChange = { fn: "addMinute", amount: 60 }
+        } else if (type === "day") {
+            operation = timeChange = { fn: "addDay", amount: 2 }
+        } else if (type === "week") {
+            operation = { fn: "addWeek", amount: 2 }
+            timeChange = { fn: "addDay", amount: 14 }
+        } else if (type === "month") {
+            operation = timeChange = { fn: "addMonth", amount: 2 }
+        } else if (type === "year") {
+            operation = timeChange = { fn: "addYear", amount: 2 }
+        }
+
+        return { operation: operation, timeChange: timeChange }
     }
 }

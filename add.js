@@ -71,6 +71,12 @@ function addNoTimezone(type, date, amount) {
         datetime.setUTCDate(datetime.getUTCDate() + amount)
     } else if (type === "week") {
         datetime.setUTCDate(datetime.getUTCDate() + 7 * amount)
+    // The logic for `addMonth` should not add two months
+    // When you add a month to Jan 31 in JavaScript you get
+    // March 2nd. This is manually fixed by ensuring we set
+    // it to the real month and then setting the date back and
+    // clamping the date of the month by the maximum number
+    // of days in the month
     } else if (type === "month") {
         var targetMonth = datetime.getUTCMonth() + amount
         var day = datetime.getUTCDate()
@@ -80,6 +86,8 @@ function addNoTimezone(type, date, amount) {
         var daysInMonth = getDaysInMonth(
             datetime.getUTCFullYear(), datetime.getUTCMonth())
         datetime.setUTCDate(Math.min(day, daysInMonth))
+    } else if (type === "year") {
+        datetime.setUTCFullYear(datetime.getUTCFullYear() + amount)
     }
 
     var formatted = formatIsoDate(datetime, isoDate.offset)
@@ -92,7 +100,9 @@ function addTimezone(type, date, amount) {
     // at tuesday 2am week 14. This can be done by just casting
     // the time to local time, adding a week and casting it back
     // to the timezone. This avoids some bugs with moment as well
-    if (type === "week" || type === "day" || type === "month") {
+    if (type === "week" || type === "day" ||
+        type === "month" || type === "year"
+    ) {
         return addLocalTimezone(type, date, amount)
     }
 
