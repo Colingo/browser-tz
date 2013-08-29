@@ -49,6 +49,31 @@ test("addMillisecond", function (assert) {
         timezone: "America/Toronto"
     }, 100), "2013-11-03T01:00:00.150-05:00")
 
+    assert.equal(tz.addMillisecond({
+        iso: "2013-03-10T06:59:59.850Z",
+        timezone: "America/Toronto"
+    }, 100), "2013-03-10T01:59:59.950-05:00")
+    assert.equal(tz.addMillisecond({
+        iso: "2013-03-10T06:59:59.900Z",
+        timezone: "America/Toronto"
+    }, 100), "2013-03-10T03:00:00.000-04:00")
+    assert.equal(tz.addMillisecond({
+        iso: "2013-03-10T06:59:59.950Z",
+        timezone: "America/Toronto"
+    }, 100), "2013-03-10T03:00:00.050-04:00")
+    assert.equal(tz.addMillisecond({
+        iso: "2013-03-10T07:00:00.050Z",
+        timezone: "America/Toronto"
+    }, -100), "2013-03-10T01:59:59.950-05:00")
+    assert.equal(tz.addMillisecond({
+        iso: "2013-03-10T07:00:00.100Z",
+        timezone: "America/Toronto"
+    }, -100), "2013-03-10T03:00:00.000-04:00")
+    assert.equal(tz.addMillisecond({
+        iso: "2013-03-10T07:00:00.050Z",
+        timezone: "America/Toronto"
+    }, 100), "2013-03-10T03:00:00.150-04:00")
+
     assert.end()
 })
 

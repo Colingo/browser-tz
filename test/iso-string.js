@@ -26,6 +26,7 @@ test("tz.IsoString", function (assert) {
         iso: "2013-08-10T00:00:00Z",
         timezone: "America/Toronto"
     }), "2013-08-09T20:00:00.000-04:00")
+
     assert.equal(tz.IsoString({
         iso: "2013-11-02T06:00:00Z",
         timezone: "America/Toronto"
@@ -46,6 +47,7 @@ test("tz.IsoString", function (assert) {
         iso: "2013-11-03T05:00:00Z",
         timezone: "America/Toronto"
     }), "2013-11-03T01:00:00.000-04:00")
+
     assert.equal(tz.IsoString({
         iso: "2013-03-10T05:00:00Z",
         timezone: "America/Toronto"
