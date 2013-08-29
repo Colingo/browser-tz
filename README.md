@@ -46,6 +46,8 @@ var tomorrowInNewYork = tz.addDay({
   iso: todayInNewYork,
   timezone: "America/New_York"
 }, 1)
+
+var timeString = tz.format(tomorrowInNewYork, "hh:mm A")
 ```
 
 ## Todo

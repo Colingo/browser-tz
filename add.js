@@ -1,9 +1,3 @@
-// var SECOND = 1000
-// var MINUTE = 60 * SECOND
-// var HOUR = 60 *  MINUTE
-// var DAY = 24 * HOUR
-// var WEEK = 7 * DAY
-
 var parseIsoDate = require("./iso-date/parse.js")
 var formatIsoDate = require("./iso-date/format.js")
 var parseToMoment = require("./moment/parse.js")
