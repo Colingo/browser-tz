@@ -1,7 +1,13 @@
+var moment = require("moment-timezone/moment-timezone.js")
+
+var IsoString = require("./iso-string.js")
 var parseIsoDate = require("./iso-date/parse.js")
 var formatIsoDate = require("./iso-date/format.js")
 var parseToMoment = require("./moment/parse.js")
 var formatFromMoment = require("./moment/format.js")
+
+var DAY = 24
+var WEEK = 7 * DAY
 
 module.exports = add
 
@@ -24,6 +30,10 @@ function add(type, date, timezone, amount) {
     if (!date.timezone) {
         return addNoTimezone(type, date, amount)
     } else {
+        if (!moment.tz.__zones[date.timezone]) {
+            return "BAD DATE"
+        }
+
         return addTimezone(type, date, amount)
     }
 }
@@ -51,11 +61,13 @@ function addNoTimezone(type, date, amount) {
     var datetime = new Date(date.iso + "Z")
 
     if (type === "week") {
-        datetime.setDate(datetime.getDate() + 7 * amount)
+        datetime.setUTCDate(datetime.getUTCDate() + 7 * amount)
     } else if (type === "hour") {
-        datetime.setHours(datetime.getHours() + amount)
+        datetime.setUTCHours(datetime.getUTCHours() + amount)
     } else if (type === "millisecond") {
-        datetime.setMilliseconds(datetime.getMilliseconds() + amount)
+        datetime.setUTCMilliseconds(datetime.getUTCMilliseconds() + amount)
+    } else if (type === "minute") {
+        datetime.setUTCMinutes(datetime.getUTCMinutes() + amount)
     }
 
     var formatted = formatIsoDate(datetime, isoDate.offset)
@@ -63,6 +75,50 @@ function addNoTimezone(type, date, amount) {
 }
 
 function addTimezone(type, date, amount) {
+    if (type === "week") {
+        return addLocalTimezone(type, date, amount)
+    }
+
+    var time = parseToMoment(date)
+
+    if (!time) {
+        return "BAD DATE"
+    }
+
+    // if (type === "week") {
+    //     type = "hour"
+    //     amount = WEEK * amount
+    // }
+
+    time.add(type, amount)
+
+    return formatFromMoment(time)
+}
+
+function addLocalTimezone(type, date, amount) {
+    var localISO = IsoString(date)
+
+    if (localISO === "BAD DATE") {
+        return localISO
+    }
+
+    // console.log("date", date)
+    var isoDate = parseIsoDate(localISO)
+    // console.log("localISO", localISO)
+
+    if (isoDate.offset) {
+        localISO = localISO
+            .substring(0, localISO.length - isoDate.offset.length)
+    }
+
+
+    var targetDate = addNoTimezone(type, { iso: localISO }, amount)
+    // console.log("targetDate", targetDate)
+    return IsoString({ iso: targetDate, timezone: date.timezone })
+}
+
+
+function addMomentTimezone(type, date, amount) {
     var time = parseToMoment(date)
 
     if (!time) {
