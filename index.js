@@ -14,16 +14,12 @@ function BrowserTimezone(timezoneData) {
         IsoString: IsoString,
         format: format,
         addMillisecond: add.bind(null, "millisecond"),
-        addSecond: NotImplemented("addSecond"),
-        // addSecond: add.bind(null, "second"),
-        // addMinute: NotImplemented("addMinute"),
+        addSecond: add.bind(null, "second"),
         addMinute: add.bind(null, "minute"),
         addHour: add.bind(null, "hour"),
-        addDay: NotImplemented("addDay"),
-        // addDay: add.bind(null, "day"),
+        addDay: add.bind(null, "day"),
         addWeek: add.bind(null, "week"),
-        addMonth: NotImplemented("addMonth"),
-        // addMonth: add.bind(null, "month"),
+        addMonth: add.bind(null, "month"),
         addYear: NotImplemented("addYear")
         // addYear: add.bind(null, "year")
     }

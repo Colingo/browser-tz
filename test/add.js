@@ -46,6 +46,60 @@ test("addMillisecond", function (assert) {
     assert.end()
 })
 
+test("addSecond", function (assert) {
+    assertBadDates(assert, "addSecond")
+
+    assert.equal(tz.addSecond("2013-11-03T05:00:04.000Z", 1),
+        "2013-11-03T05:00:05.000Z")
+    assert.equal(tz.addSecond("2013-11-03T05:00:04.000-05:00", 1),
+        "2013-11-03T05:00:05.000-05:00")
+    assert.equal(tz.addSecond("2013-11-03T05:00:04.000", 1),
+        "2013-11-03T05:00:05.000")
+
+    assert.equal(tz.addSecond("2013-11-03T05:00:59.500Z", 1),
+        "2013-11-03T05:01:00.500Z")
+    assert.equal(tz.addSecond("2013-11-03T05:01:00.500Z", -1),
+        "2013-11-03T05:00:59.500Z")
+
+    assertDSTBoundary(assert, "second", {
+        iso: "2013-11-03T06:00:00Z",
+        timezone: "America/Toronto"
+    })
+    assertDSTBoundary(assert, "second", {
+        iso: "2013-03-10T07:00:00.000Z",
+        timezone: "America/Toronto"
+    })
+
+    assert.end()
+})
+
+test("addMinute", function (assert) {
+    assertBadDates(assert, "addMinute")
+
+    assert.equal(tz.addMinute("2013-11-03T05:05:00.000Z", 1),
+        "2013-11-03T05:06:00.000Z")
+    assert.equal(tz.addMinute("2013-11-03T05:05:00.000-05:00", 1),
+        "2013-11-03T05:06:00.000-05:00")
+    assert.equal(tz.addMinute("2013-11-03T05:05:00.000", 1),
+        "2013-11-03T05:06:00.000")
+
+    assert.equal(tz.addMinute("2013-11-03T05:59:30.000Z", 1),
+        "2013-11-03T06:00:30.000Z")
+    assert.equal(tz.addMinute("2013-11-03T06:00:30.000Z", -1),
+        "2013-11-03T05:59:30.000Z")
+
+    assertDSTBoundary(assert, "minute", {
+        iso: "2013-11-03T06:00:00Z",
+        timezone: "America/Toronto"
+    })
+    assertDSTBoundary(assert, "minute", {
+        iso: "2013-03-10T07:00:00.000Z",
+        timezone: "America/Toronto"
+    })
+
+    assert.end()
+})
+
 test("addHour", function (assert) {
     assertBadDates(assert, "addHour")
 
@@ -86,6 +140,33 @@ test("addHour", function (assert) {
         timezone: "America/Toronto"
     })
     assertDSTBoundary(assert, "hour", {
+        iso: "2013-03-10T07:00:00.000Z",
+        timezone: "America/Toronto"
+    })
+
+    assert.end()
+})
+
+test("addDay", function (assert) {
+    assertBadDates(assert, "addDay")
+
+    assert.equal(tz.addDay("2013-11-03T05:00:00.000Z", 1),
+        "2013-11-04T05:00:00.000Z")
+    assert.equal(tz.addDay("2013-11-03T05:00:00.000-05:00", 1),
+        "2013-11-04T05:00:00.000-05:00")
+    assert.equal(tz.addDay("2013-11-03T05:00:00.000", 1),
+        "2013-11-04T05:00:00.000")
+
+    assert.equal(tz.addDay("2013-11-30T06:00:00.000Z", 1),
+        "2013-12-01T06:00:00.000Z")
+    assert.equal(tz.addDay("2013-12-01T06:00:00.000Z", -1),
+        "2013-11-30T06:00:00.000Z")
+
+    assertDSTBoundary(assert, "day", {
+        iso: "2013-11-03T06:00:00Z",
+        timezone: "America/Toronto"
+    })
+    assertDSTBoundary(assert, "day", {
         iso: "2013-03-10T07:00:00.000Z",
         timezone: "America/Toronto"
     })
@@ -147,6 +228,40 @@ test("addWeek", function (assert) {
     assert.end()
 })
 
+test("addMonth", function (assert) {
+    assertBadDates(assert, "addMonth")
+
+    assert.equal(tz.addMonth("2013-11-03T05:00:00.000Z", 1),
+        "2013-12-03T05:00:00.000Z")
+    assert.equal(tz.addMonth("2013-11-03T05:00:00.000-05:00", 1),
+        "2013-12-03T05:00:00.000-05:00")
+    assert.equal(tz.addMonth("2013-11-03T05:00:00.000", 1),
+        "2013-12-03T05:00:00.000")
+
+    assert.equal(tz.addMonth("2013-12-30T06:00:00.000Z", 1),
+        "2014-01-30T06:00:00.000Z")
+    assert.equal(tz.addMonth("2014-01-30T06:00:00.000Z", -1),
+        "2013-12-30T06:00:00.000Z")
+
+    assert.equal(tz.addMonth("2013-01-30T00:00:00Z", 1),
+        "2013-02-28T00:00:00.000Z")
+    assert.equal(tz.addMonth({
+        iso: "2013-01-30T00:00:00Z",
+        timezone: "America/Toronto"
+    }, 1), "2013-02-28T19:00:00.000-05:00")
+
+    assertDSTBoundary(assert, "month", {
+        iso: "2013-11-03T06:00:00Z",
+        timezone: "America/Toronto"
+    })
+    assertDSTBoundary(assert, "month", {
+        iso: "2013-03-10T07:00:00.000Z",
+        timezone: "America/Toronto"
+    })
+
+    assert.end()
+})
+
 function assertBadDates(assert, operation) {
     assert.equal(tz[operation]("JUNK", 1), "BAD DATE")
     assert.equal(tz[operation]({
@@ -165,13 +280,24 @@ function assertDSTBoundary(assert, type, time) {
 
     var operation, timeChange
 
-    if (type === "hour") {
+    if (type === "milliSecond") {
+        operation = timeChange = { fn: "addMillisecond", amount: 100 }
+    } else if (type === "second") {
+        operation = { fn: "addSecond", amount: 1 }
+        timeChange = { fn: "addMillisecond", amount: 1000 }
+    } else if (type === "minute") {
+        operation = { fn: "addMinute", amount: 1 }
+        timeChange = { fn: "addSecond", amount: 60 }
+    } else if (type === "hour") {
         operation =  { fn: "addHour", amount: 1 }
         timeChange = { fn: "addMinute", amount: 60 }
-    } else if (type === "milliSecond") {
-        operation = timeChange = { fn: "addMillisecond", amount: 100 }
+    } else if (type === "day") {
+        operation = timeChange = { fn: "addDay", amount: 2 }
     } else if (type === "week") {
-        operation = timeChange = { fn: "addWeek", amount: 2 }
+        operation = { fn: "addWeek", amount: 2 }
+        timeChange = { fn: "addDay", amount: 14 }
+    } else if (type === "month") {
+        operation = timeChange = { fn: "addMonth", amount: 2 }
     }
 
     var gmtTimes = {
@@ -185,7 +311,7 @@ function assertDSTBoundary(assert, type, time) {
     }
 
     var expectedTimes
-    if (type === "week") {
+    if (type === "week" || type === "day" || type === "month") {
         var beforeTime = {
             iso: tz.IsoString({
                 iso: gmtTimes["-0.5"],
