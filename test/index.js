@@ -21,8 +21,15 @@ test("BrowserTimezone is a function", function (assert) {
 
 test("tz has correct methods", function (assert) {
     assert.equal(typeof tz.IsoString, "function")
-    assert.equal(typeof tz.addWeek, "function")
     assert.equal(typeof tz.format, "function")
+    assert.equal(typeof tz.addMillisecond, "function")
+    assert.equal(typeof tz.addSecond, "function")
+    assert.equal(typeof tz.addMinute, "function")
+    assert.equal(typeof tz.addHour, "function")
+    assert.equal(typeof tz.addDay, "function")
+    assert.equal(typeof tz.addWeek, "function")
+    assert.equal(typeof tz.addMonth, "function")
+    assert.equal(typeof tz.addYear, "function")
 
     assert.end()
 })

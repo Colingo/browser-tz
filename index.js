@@ -12,9 +12,25 @@ function BrowserTimezone(timezoneData) {
 
     return {
         IsoString: IsoString,
-        addWeek: add.bind(null, "week"),
+        format: format,
+        addMillisecond: add.bind(null, "millisecond"),
+        addSecond: NotImplemented("addSecond"),
+        // addSecond: add.bind(null, "second"),
+        addMinute: NotImplemented("addMinute"),
+        // addMinute: add.bind(null, "minute"),
         addHour: add.bind(null, "hour"),
-        format: format
+        addDay: NotImplemented("addDay"),
+        // addDay: add.bind(null, "day"),
+        addWeek: add.bind(null, "week"),
+        addMonth: NotImplemented("addMonth"),
+        // addMonth: add.bind(null, "month"),
+        addYear: NotImplemented("addYear")
+        // addYear: add.bind(null, "year")
     }
 }
 
+function NotImplemented(name) {
+    return function () {
+        throw new Error("browser-tz: not implemented " + name)
+    }
+}

@@ -41,15 +41,27 @@ function addNoTimezone(type, date, amount) {
         return "BAD DATE"
     }
 
+    // passing an offset into a Date construct will make the date
+    // a different time in GMT then the time being passed in.
+    // The easiest way to deal with this is to remove the offset
+    // and just add it back on in the formatting step
+    if (isoDate.offset) {
+        date.iso = date.iso
+            .substring(0, date.iso.length - isoDate.offset.length)
+    }
+
     // firefox parses dates without an offset of them as UTC
     // Chrome & opera & IE parses iso dates without an offset on
-    // them as local time
-    var datetime = new Date(isoDate.offset ? date.iso : date.iso + "Z")
+    // them as local time. For consistency force all dates to be
+    // in UTC by adding Z
+    var datetime = new Date(date.iso + "Z")
 
     if (type === "week") {
         datetime.setDate(datetime.getDate() + 7 * amount)
     } else if (type === "hour") {
         datetime.setHours(datetime.getHours() + amount)
+    } else if (type === "millisecond") {
+        datetime.setMilliseconds(datetime.getMilliseconds() + amount)
     }
 
     var formatted = formatIsoDate(datetime, isoDate.offset)
