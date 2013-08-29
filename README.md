@@ -21,6 +21,10 @@ This is a set of minimal operation needed to deal with timezone
 in javascript. It focuses on only having one canonical
 representation of a time, namely an ISO8601 string.
 
+## Docs
+
+### [see docs.mli file][13]
+
 ## Example
 
 ```js
@@ -126,3 +130,4 @@ A user might ask you for `2am` on a day of DST where the hour
   [10]: https://david-dm.org/Colingo/browser-tz
   [11]: https://ci.testling.com/Colingo/browser-tz.png
   [12]: https://ci.testling.com/Colingo/browser-tz
+  [13]: https://github.com/Colingo/browser-tz/blob/master/docs.mli
