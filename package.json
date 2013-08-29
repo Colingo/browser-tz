@@ -1,6 +1,6 @@
 {
   "name": "browser-tz",
-  "version": "0.1.7",
+  "version": "0.2.0",
   "description": "Timezone specific manipulation of datetime strings",
   "keywords": [],
   "author": "Raynos <raynos2@gmail.com>",
