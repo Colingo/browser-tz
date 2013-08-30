@@ -241,11 +241,11 @@ test("addWeek", function (assert) {
         iso: "2013-03-10T07:00:00.000Z",
         timezone: "America/Toronto"
     }, -1), "2013-03-03T03:00:00.000-05:00")
+
     assert.equal(tz.addWeek({
         iso: "2013-08-25T00:00:00.000-07:00",
         timezone: "America/Los_Angeles"
     }, 1), "2013-09-01T00:00:00.000-07:00")
-
 
     assert.equal(tz.addWeek({
         iso: "2013-10-27T02:00:00.000-04:00",

@@ -17,7 +17,7 @@ function parseToMoment(date, isoDate) {
     }
 
     var time = moment(date.iso).tz(date.timezone)
-    // console.log("parseToMoment.time", String(time))
+    // console.log("parseToMoment.time", String(time), date)
 
     // moment casts "local" dates to be in the machine timezone
     // rather then in the provided timezone
@@ -32,6 +32,8 @@ function parseToMoment(date, isoDate) {
 function setCorrectLocalTime(time, isoDate) {
     // console.log("setCorrectLocalTime", String(time), isoDate)
     // time.minute(isoDate.minute)
+    // console.log("isoDate.month", isoDate.month)
+    time.month(isoDate.month - 1)
     time.date(isoDate.day)
 
     // console.log("parseToMoment.first-day", String(time))

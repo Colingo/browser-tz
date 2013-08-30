@@ -134,8 +134,8 @@ function addLocalTimezone(type, date, amount) {
 
 
     var targetDate = addNoTimezone(type, { iso: localISO }, amount)
-
-    return IsoString({ iso: targetDate, timezone: date.timezone })
+    var iso = IsoString({ iso: targetDate, timezone: date.timezone })
+    return iso
 }
 
 function isLeapYear(year) {
