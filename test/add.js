@@ -61,6 +61,19 @@ test("addSecond", function (assert) {
     assert.equal(tz.addSecond("2013-11-03T05:01:00.500Z", -1),
         "2013-11-03T05:00:59.500Z")
 
+    assert.equal(tz.addSecond({
+        iso: "2013-04-06T15:00:00Z",
+        timezone: "Australia/Lord_Howe"
+    }, -30), "2013-04-07T01:59:30.000+11:00")
+    assert.equal(tz.addSecond({
+        iso: "2013-04-06T15:00:00Z",
+        timezone: "Australia/Lord_Howe"
+    }, -60), "2013-04-07T01:59:00.000+11:00")
+    assert.equal(tz.addSecond({
+        iso: "2013-04-06T15:00:00Z",
+        timezone: "Australia/Lord_Howe"
+    }, -90), "2013-04-07T01:58:30.000+11:00")
+
     assertDSTBoundary(assert, "second", {
         iso: "2013-11-03T06:00:00Z",
         timezone: "America/Toronto"
@@ -96,6 +109,16 @@ test("addMinute", function (assert) {
         iso: "2013-03-10T07:00:00.000Z",
         timezone: "America/Toronto"
     })
+    // assertDSTBoundary(assert, "minute", {
+    //     iso: "2013-10-05T15:30:00Z",
+    //     timezone: "Australia/Lord_Howe"
+    // })
+    // console.log("Australia/Lord_Howe --------------------------")
+    // assertDSTBoundary(assert, "minute", {
+    //     iso: "2013-04-06T15:00:00Z",
+    //     timezone: "Australia/Lord_Howe"
+    // })
+    // console.log("Australia/Lord_Howe --------------------------")
 
     assert.end()
 })

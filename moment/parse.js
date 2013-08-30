@@ -30,7 +30,10 @@ function parseToMoment(date, isoDate) {
 }
 
 function setCorrectLocalTime(time, isoDate) {
+    // console.log("setCorrectLocalTime", String(time), isoDate)
+    // time.minute(isoDate.minute)
     time.date(isoDate.day)
+
     // console.log("parseToMoment.first-day", String(time))
     // go back an extra hour to jump over the Timezone gap
     // this make ambigious local times always favor the
@@ -38,6 +41,10 @@ function setCorrectLocalTime(time, isoDate) {
     // switches back to 1am it picks the first 1am
     time.hour(Math.max(isoDate.hour - 1, 0))
     // console.log("parseToMoment.first-hour", String(time))
+
+    // if (time.minute() !== isoDate.minute) {
+    //     time.minute(isoDate.minute)
+    // }
 
     if (time.date() !== isoDate.day) {
         // since we are jumping an extra hour back to favor the
@@ -52,15 +59,26 @@ function setCorrectLocalTime(time, isoDate) {
         // console.log("parseToMoment.second-day", String(time))
     }
 
-    var secondHour, thirdHour
+    var latterZone, earlierZone
 
     if (time.hour() !== isoDate.hour) {
         // changing hour across a TZ gap is buggy. So we
         // set the hour twice, once to cross the timezone gap
         // and the second one to get the hour right
         time.hour(isoDate.hour)
-        secondHour = time.hour()
+        latterZone = time.zone()
         // console.log("parseToMoment.second-hour", String(time))
+    }
+
+    if (time.minute() !== isoDate.minute) {
+        // We set the minute as late as we can after having done two
+        // hour setting hops. This means that we have already crossed
+        // the TZ gap and the minute cannot be unset to the incorrect
+        // minute by a TZ gap. If we set this earlier then setting
+        // the hour might cause a TZ change (DST) and thus set
+        // the minute to a different value
+        time.minute(isoDate.minute)
+        // console.log("parseToMoment.first-minute", String(time))
     }
 
     if (time.hour() !== isoDate.hour) {
@@ -71,7 +89,7 @@ function setCorrectLocalTime(time, isoDate) {
         // the correct side of the timezone on the second hour()
         // set so we need a third set to get the time correct
         time.hour(isoDate.hour)
-        thirdHour = time.hour()
+        earlierZone = time.zone()
         // console.log("parseToMoment.third-hour", String(time))
     }
 
@@ -80,15 +98,11 @@ function setCorrectLocalTime(time, isoDate) {
         // hour we want then we must be setting it to a time that
         // doesn't exist like 2am on a DST where time jumps from
         // 1.59am to 3.01am
-        // The correct behaviour we want is to set the hour
-        // to the later one which is the secondHour variable
-        time.hour(secondHour)
-        // we have to set the hour twice to get it to converge
-        // properly to the correct hour since we jumped across
-        // a timezone change again
-        time.hour(secondHour)
+        // Moment goes back a timezone offset when this happens.
+        // The correct thing to do here is to go forward a
+        // DST offset so we should add the DST offset
+        var offset = (earlierZone - latterZone)
+        time.minute(time.minute() + offset)
         // console.log("parseToMoment.fourth-hour", String(time))
     }
-
-    time.minute(isoDate.minute)
 }

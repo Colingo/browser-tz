@@ -135,6 +135,90 @@ test("tz.IsoString ambigious", function (assert) {
     assert.end()
 })
 
+test("tz.IsoString ambigious dates for +30m/-30m DST", function (assert) {
+    assert.equal(tz.IsoString({
+        iso: "2013-10-05T15:29:59Z",
+        timezone: "Australia/Lord_Howe"
+    }), "2013-10-06T01:59:59.000+10:30")
+    assert.equal(tz.IsoString({
+        iso: "2013-10-05T15:30:00Z",
+        timezone: "Australia/Lord_Howe"
+    }), "2013-10-06T02:30:00.000+11:00")
+    assert.equal(tz.IsoString({
+        iso: "2013-10-05T15:31:00Z",
+        timezone: "Australia/Lord_Howe"
+    }), "2013-10-06T02:31:00.000+11:00")
+
+    assert.equal(tz.IsoString({
+        iso: "2013-04-06T14:31:00Z",
+        timezone: "Australia/Lord_Howe"
+    }), "2013-04-07T01:31:00.000+11:00")
+    assert.equal(tz.IsoString({
+        iso: "2013-04-06T14:59:59Z",
+        timezone: "Australia/Lord_Howe"
+    }), "2013-04-07T01:59:59.000+11:00")
+    assert.equal(tz.IsoString({
+        iso: "2013-04-06T15:00:00Z",
+        timezone: "Australia/Lord_Howe"
+    }), "2013-04-07T01:30:00.000+10:30")
+    assert.equal(tz.IsoString({
+        iso: "2013-04-06T15:01:00Z",
+        timezone: "Australia/Lord_Howe"
+    }),"2013-04-07T01:31:00.000+10:30")
+
+    assert.equal(tz.IsoString({
+        iso: "2013-04-07T01:20:00",
+        timezone: "Australia/Lord_Howe"
+    }), "2013-04-07T01:20:00.000+11:00")
+    assert.equal(tz.IsoString({
+        iso: "2013-04-07T02:00:00",
+        timezone: "Australia/Lord_Howe"
+    }), "2013-04-07T02:00:00.000+10:30")
+    assert.equal(tz.IsoString({
+        iso: "2013-04-07T02:20:00",
+        timezone: "Australia/Lord_Howe"
+    }), "2013-04-07T02:20:00.000+10:30")
+
+    // ambigious
+    assert.equal(tz.IsoString({
+        iso: "2013-04-07T01:30:00",
+        timezone: "Australia/Lord_Howe"
+    }), "2013-04-07T01:30:00.000+11:00")
+    assert.equal(tz.IsoString({
+        iso: "2013-04-07T01:45:00",
+        timezone: "Australia/Lord_Howe"
+    }), "2013-04-07T01:45:00.000+11:00")
+
+    assert.equal(tz.IsoString({
+        iso: "2013-10-06T01:30:00",
+        timezone: "Australia/Lord_Howe"
+    }), "2013-10-06T01:30:00.000+10:30")
+    assert.equal(tz.IsoString({
+        iso: "2013-10-06T01:59:00",
+        timezone: "Australia/Lord_Howe"
+    }), "2013-10-06T01:59:00.000+10:30")
+    assert.equal(tz.IsoString({
+        iso: "2013-10-06T02:30:00",
+        timezone: "Australia/Lord_Howe"
+    }), "2013-10-06T02:30:00.000+11:00")
+    assert.equal(tz.IsoString({
+        iso: "2013-10-06T03:00:00",
+        timezone: "Australia/Lord_Howe"
+    }), "2013-10-06T03:00:00.000+11:00")
+
+    // ambigious
+    assert.equal(tz.IsoString({
+        iso: "2013-10-06T02:00:00",
+        timezone: "Australia/Lord_Howe"
+    }), "2013-10-06T02:30:00.000+11:00")
+    assert.equal(tz.IsoString({
+        iso: "2013-10-06T02:15:00",
+        timezone: "Australia/Lord_Howe"
+    }), "2013-10-06T02:45:00.000+11:00")
+
+    assert.end()
+})
+
 // function printLine(word,end) {
 //     console.log("--------------------------" +
 //         word + (end ? " END--" : " START") +
