@@ -22,7 +22,7 @@ function IsoString(date, timezone) {
         return date.iso
     }
 
-    if (!moment.tz.__zones[date.timezone]) {
+    if (!moment.__zones[date.timezone]) {
         return "BAD DATE"
     }
 

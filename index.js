@@ -8,7 +8,7 @@ module.exports = BrowserTimezone
 
 function BrowserTimezone(timezoneData) {
     moment.tz.add(timezoneData)
-    moment.tz.__zones = timezoneData.zones
+    moment.__zones = timezoneData.zones
 
     return {
         IsoString: IsoString,

@@ -29,7 +29,7 @@ function add(type, date, timezone, amount) {
     if (!date.timezone) {
         return addNoTimezone(type, date, amount)
     } else {
-        if (!moment.tz.__zones[date.timezone]) {
+        if (!moment.__zones[date.timezone]) {
             return "BAD DATE"
         }
 
