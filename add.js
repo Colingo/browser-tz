@@ -41,6 +41,7 @@ function addNoTimezone(type, date, amount) {
     var isoDate = parseIsoDate(date.iso)
 
     if (!isoDate) {
+        // console.log("BAD DATE", date)
         return "BAD DATE"
     }
 
@@ -109,6 +110,7 @@ function addTimezone(type, date, amount) {
     var time = parseToMoment(date)
 
     if (!time) {
+        // console.log("BAD DATE", String(time))
         return "BAD DATE"
     }
 
@@ -121,6 +123,7 @@ function addLocalTimezone(type, date, amount) {
     var localISO = IsoString(date)
 
     if (localISO === "BAD DATE") {
+        // console.log("BAD DATE", date)
         return localISO
     }
 
@@ -133,7 +136,10 @@ function addLocalTimezone(type, date, amount) {
 
 
     var targetDate = addNoTimezone(type, { iso: localISO }, amount)
-    // console.log("targetDate", targetDate)
+    if (targetDate.indexOf("NaN") !== -1) {
+        // console.log("targetDate", targetDate, isoDate, localISO, date)
+    }
+
     return IsoString({ iso: targetDate, timezone: date.timezone })
 }
 

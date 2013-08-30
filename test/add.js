@@ -194,6 +194,17 @@ test("addDay", function (assert) {
         timezone: "America/Toronto"
     })
 
+    // console.log("addDay Lord_Howe")
+    // assertDSTBoundary(assert, "day", {
+    //     iso: "2013-10-05T15:30:00Z",
+    //     timezone: "Australia/Lord_Howe"
+    // })
+    // assertDSTBoundary(assert, "day", {
+    //     iso: "2013-04-06T15:00:00Z",
+    //     timezone: "Australia/Lord_Howe"
+    // })
+    // console.log("end addDay Lord_Howe")
+
     assert.end()
 })
 
@@ -400,6 +411,12 @@ function assertDSTBoundary(assert, type, time) {
         assertTimeOperation(1, 0)
         assertTimeOperation(0.5, 1.5)
     }
+
+    Object.keys(expectedTimes).forEach(function (key) {
+        var time = expectedTimes[key]
+
+        assert.notEqual(time, "BAD DATE")
+    })
 
     function assertTimeOperation(start, end) {
         var direction = typeof end !== "string" ? end - start :

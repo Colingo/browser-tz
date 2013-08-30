@@ -3,12 +3,10 @@ var test = require("tape")
 var tz = require("./tz.js")
 
 test("single test", function (assert) {
-    console.log("----------------------- Australia/Lord_Howe -----------------")
     assert.equal(tz.IsoString({
         iso: "2013-10-06T02:00:00",
         timezone: "Australia/Lord_Howe"
     }), "2013-10-06T02:30:00.000+11:00")
-    console.log("----------------------- America/Toronto ---------------------")
     assert.equal(tz.IsoString({
         iso: "2013-03-10T02:00:00",
         timezone: "America/Toronto"
