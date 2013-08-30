@@ -1,12 +1,8 @@
 # browser-tz
 
-<!--
-    [![build status][1]][2]
-    [![NPM version][3]][4]
-    [![Coverage Status][5]][6]
-    [![gemnasium Dependency Status][7]][8]
-    [![Davis Dependency status][9]][10]
--->
+[![build status][1]][2] [![Coverage Status][5]][6] [![gemnasium Dependency Status][7]][8] [![Davis Dependency status][9]][10]
+
+[![NPM][3]][4]
 
 [![browser support][11]][12]
 
@@ -122,8 +118,8 @@ A user might ask you for `2am` on a day of DST where the hour
 
   [1]: https://secure.travis-ci.org/Colingo/browser-tz.png
   [2]: https://travis-ci.org/Colingo/browser-tz
-  [3]: https://badge.fury.io/js/browser-tz.png
-  [4]: https://badge.fury.io/js/browser-tz
+  [3]: https://nodei.co/npm/browser-tz.png
+  [4]: https://nodei.co/npm/browser-tz/
   [5]: https://coveralls.io/repos/Colingo/browser-tz/badge.png
   [6]: https://coveralls.io/r/Colingo/browser-tz
   [7]: https://gemnasium.com/Colingo/browser-tz.png
