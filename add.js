@@ -128,12 +128,9 @@ function addLocalTimezone(type, date, amount) {
     }
 
     var isoDate = parseIsoDate(localISO)
-    // console.log("isoDate", localISO)
 
-    if (isoDate.offset) {
-        localISO = localISO
-            .substring(0, localISO.length - isoDate.offset.length)
-    }
+    localISO = localISO
+        .substring(0, localISO.length - isoDate.offset.length)
 
 
     var targetDate = addNoTimezone(type, { iso: localISO }, amount)

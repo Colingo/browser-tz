@@ -14,7 +14,6 @@ function IsoString(date, timezone) {
     var isoDate = parseIsoString(date.iso)
 
     if (!isoDate) {
-        // console.log("BAD DATE", date)
         return "BAD DATE"
     }
 
