@@ -50,15 +50,6 @@ var tomorrowInNewYork = tz.addDay({
 var timeString = tz.format(tomorrowInNewYork, "hh:mm A")
 ```
 
-## Todo
-
- - Test `IsoString` for timezones that have +30m/-30m offsets
- - Test `IsoString` in exotic timezones where it's not a normal
-    DST change
- - Test `addMinute` for timezones that have +30m/-30m offsets
- - Test `addHour` in exotic timezones where it's not a normal
-    DST change
-
 ## The timezone strategy
 
 To make dealing with times and timezones easier this module

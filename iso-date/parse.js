@@ -6,7 +6,7 @@ var isISOString = new RegExp(
     "(\\d\\d):" + // minute
     "(\\d\\d)" + // second
     "\\.?(\\d\\d\\d)?" + // optional milliseconds
-    "(Z|(\\-\\d\\d:\\d\\d))?" // optional timezone information
+    "(Z|([\\-\\+]\\d\\d:\\d\\d))?" // optional timezone information
 )
 
 module.exports = parseIsoString

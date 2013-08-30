@@ -1,14 +1,7 @@
 var test = require("tape")
 
 if (!Function.prototype.bind) {
-    Function.prototype.bind = function (context) {
-        var args = [].slice.call(arguments, 1)
-        var fn = this
-
-        return function () {
-            return fn.apply(null, args.concat([].slice.call(arguments)))
-        }
-    }
+    Function.prototype.bind = require("function-bind")
 }
 
 var BrowserTimezone = require("../index")

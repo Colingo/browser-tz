@@ -17,10 +17,12 @@
     "email": "raynos2@gmail.com"
   },
   "dependencies": {
-    "moment-timezone": "0.0.2"
+    "moment-timezone": "0.0.2",
+    "tape": "~1.0.4"
   },
   "devDependencies": {
-    "tape": "~1.0.2"
+    "tape": "git://github.com/Raynos/tape",
+    "function-bind": "~0.1.0"
   },
   "licenses": [
     {

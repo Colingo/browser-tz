@@ -109,16 +109,15 @@ test("addMinute", function (assert) {
         iso: "2013-03-10T07:00:00.000Z",
         timezone: "America/Toronto"
     })
-    // assertDSTBoundary(assert, "minute", {
-    //     iso: "2013-10-05T15:30:00Z",
-    //     timezone: "Australia/Lord_Howe"
-    // })
-    // console.log("Australia/Lord_Howe --------------------------")
-    // assertDSTBoundary(assert, "minute", {
-    //     iso: "2013-04-06T15:00:00Z",
-    //     timezone: "Australia/Lord_Howe"
-    // })
-    // console.log("Australia/Lord_Howe --------------------------")
+
+    assertDSTBoundary(assert, "minute", {
+        iso: "2013-10-05T15:30:00Z",
+        timezone: "Australia/Lord_Howe"
+    })
+    assertDSTBoundary(assert, "minute", {
+        iso: "2013-04-06T15:00:00Z",
+        timezone: "Australia/Lord_Howe"
+    })
 
     assert.end()
 })
@@ -194,16 +193,19 @@ test("addDay", function (assert) {
         timezone: "America/Toronto"
     })
 
-    // console.log("addDay Lord_Howe")
-    // assertDSTBoundary(assert, "day", {
-    //     iso: "2013-10-05T15:30:00Z",
-    //     timezone: "Australia/Lord_Howe"
-    // })
-    // assertDSTBoundary(assert, "day", {
-    //     iso: "2013-04-06T15:00:00Z",
-    //     timezone: "Australia/Lord_Howe"
-    // })
-    // console.log("end addDay Lord_Howe")
+    assert.equal(tz.addDay({
+        iso: "2013-10-05T02:00:00.000+10:30",
+        timezone: "Australia/Lord_Howe"
+    }, 1), "2013-10-06T02:30:00.000+11:00")
+
+    assertDSTBoundary(assert, "day", {
+        iso: "2013-10-05T15:30:00Z",
+        timezone: "Australia/Lord_Howe"
+    })
+    assertDSTBoundary(assert, "day", {
+        iso: "2013-04-06T15:00:00Z",
+        timezone: "Australia/Lord_Howe"
+    })
 
     assert.end()
 })
