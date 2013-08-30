@@ -48,8 +48,9 @@ type Timezone := {
 }
 
 browser-tz := (timezoneData: Object) => Timezone
-browser-tz/iso-date/parse := (String) => IsoDate | null
-browser-tz/iso-date/format := (IsoDate | Date, offset?: String) => String
-browser-tz/moment/format := (MomentDate) => String
+browser-tz/iso-date/parse := (Iso8601String) => IsoDate | null
+browser-tz/iso-date/format := (IsoDate, offset?: String) => Iso8601String
+browser-tz/moment/format := (MomentDate) => Iso8601String
 browser-tz/moment/parse := (TimezoneDate, isoDate?: IsoDate)
     => MomentDate | null
+browser-tz/date/format := (Date, offset?: String) => Iso8601String

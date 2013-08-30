@@ -281,6 +281,8 @@ test("addMonth", function (assert) {
 
     assert.equal(tz.addMonth("2013-01-30T00:00:00Z", 1),
         "2013-02-28T00:00:00.000Z")
+    assert.equal(tz.addMonth("2012-01-30T00:00:00Z", 1),
+        "2012-02-29T00:00:00.000Z")
     assert.equal(tz.addMonth({
         iso: "2013-01-30T00:00:00Z",
         timezone: "America/Toronto"
@@ -316,6 +318,38 @@ test("addYear", function (assert) {
         iso: "2013-03-10T07:00:00.000Z",
         timezone: "America/Toronto"
     })
+
+    assert.end()
+})
+
+test("add with local format", function (assert) {
+    assert.equal(tz.addWeek({
+        iso: "2013-03-03T02:00:00.000",
+        timezone: "America/Toronto"
+    }, 1), "2013-03-10T03:00:00.000-04:00")
+
+    assert.end()
+})
+
+test("add with timezone syntax", function (assert) {
+    var d = tz.add("month", "2013-01-30T00:00:00Z", "America/Toronto", 1)
+    assert.equal(d, "2013-02-28T19:00:00.000-05:00")
+
+    assert.end()
+})
+
+test("no amount throws", function (assert) {
+    assert.throws(function () {
+        tz.add("month", "2013-01-30T00:00:00Z")
+    }, /must add an amount/)
+
+    assert.end()
+})
+
+test("add invalid type", function (assert) {
+    assert.throws(function () {
+        tz.add("foobar", "2013-11-03T00:00:00", 1)
+    }, /invalid type/)
 
     assert.end()
 })

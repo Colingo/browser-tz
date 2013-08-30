@@ -13,6 +13,7 @@ function BrowserTimezone(timezoneData) {
     return {
         IsoString: IsoString,
         format: format,
+        add: add,
         addMillisecond: add.bind(null, "millisecond"),
         addSecond: add.bind(null, "second"),
         addMinute: add.bind(null, "minute"),

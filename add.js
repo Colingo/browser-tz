@@ -2,7 +2,7 @@ var moment = require("moment-timezone/moment-timezone.js")
 
 var IsoString = require("./iso-string.js")
 var parseIsoDate = require("./iso-date/parse.js")
-var formatIsoDate = require("./iso-date/format.js")
+var formatDate = require("./date/format.js")
 var parseToMoment = require("./moment/parse.js")
 var formatFromMoment = require("./moment/format.js")
 
@@ -89,9 +89,11 @@ function addNoTimezone(type, date, amount) {
         datetime.setUTCDate(Math.min(day, daysInMonth))
     } else if (type === "year") {
         datetime.setUTCFullYear(datetime.getUTCFullYear() + amount)
+    } else {
+        throw new Error("browser-tz/add: invalid type ", type)
     }
 
-    var formatted = formatIsoDate(datetime, isoDate.offset)
+    var formatted = formatDate(datetime, isoDate.offset)
     return formatted
 }
 
@@ -110,7 +112,6 @@ function addTimezone(type, date, amount) {
     var time = parseToMoment(date)
 
     if (!time) {
-        // console.log("BAD DATE", String(time))
         return "BAD DATE"
     }
 
@@ -123,11 +124,11 @@ function addLocalTimezone(type, date, amount) {
     var localISO = IsoString(date)
 
     if (localISO === "BAD DATE") {
-        // console.log("BAD DATE", date)
         return localISO
     }
 
     var isoDate = parseIsoDate(localISO)
+    // console.log("isoDate", localISO)
 
     if (isoDate.offset) {
         localISO = localISO
@@ -136,9 +137,6 @@ function addLocalTimezone(type, date, amount) {
 
 
     var targetDate = addNoTimezone(type, { iso: localISO }, amount)
-    if (targetDate.indexOf("NaN") !== -1) {
-        // console.log("targetDate", targetDate, isoDate, localISO, date)
-    }
 
     return IsoString({ iso: targetDate, timezone: date.timezone })
 }
