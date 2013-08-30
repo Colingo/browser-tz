@@ -33,6 +33,7 @@ function setCorrectLocalTime(time, isoDate) {
     // console.log("setCorrectLocalTime", String(time), isoDate)
     // time.minute(isoDate.minute)
     // console.log("isoDate.month", isoDate.month)
+    time.year(isoDate.year)
     time.month(isoDate.month - 1)
     time.date(isoDate.day)
 

@@ -73,6 +73,10 @@ test("tz.IsoString", function (assert) {
         iso: "2013-09-01T00:00:00.000",
         timezone: "America/Los_Angeles"
     }), "2013-09-01T00:00:00.000-07:00")
+    assert.equal(tz.IsoString({
+        iso: "2013-01-01T00:00:00.000",
+        timezone: "America/Los_Angeles"
+    }), "2013-01-01T00:00:00.000-08:00")
 
     assert.end()
 })
